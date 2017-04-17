@@ -31,50 +31,68 @@
             this.dgvTabla = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtNumeroVariables = new System.Windows.Forms.TextBox();
+            this.btnGenerarTabla = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.txtNumeroVariables = new System.Windows.Forms.TextBox();
+            this.btnGenerarMapa = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pnlHorizontal = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlVertical = new System.Windows.Forms.FlowLayoutPanel();
+            this.dgvMapa = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTabla)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMapa)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvTabla
             // 
             this.dgvTabla.AllowUserToAddRows = false;
+            this.dgvTabla.AllowUserToDeleteRows = false;
+            this.dgvTabla.AllowUserToResizeColumns = false;
+            this.dgvTabla.AllowUserToResizeRows = false;
             this.dgvTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTabla.Location = new System.Drawing.Point(48, 37);
+            this.dgvTabla.Location = new System.Drawing.Point(26, 37);
+            this.dgvTabla.MultiSelect = false;
             this.dgvTabla.Name = "dgvTabla";
-            this.dgvTabla.Size = new System.Drawing.Size(257, 487);
+            this.dgvTabla.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTabla.Size = new System.Drawing.Size(325, 515);
             this.dgvTabla.TabIndex = 0;
+            this.dgvTabla.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTabla_CellClick);
+            this.dgvTabla.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTabla_CellEndEdit);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvTabla);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 560);
+            this.groupBox1.Size = new System.Drawing.Size(374, 577);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tabla de Verdad";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btnGenerarTabla);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtNumeroVariables);
-            this.groupBox2.Location = new System.Drawing.Point(411, 12);
+            this.groupBox2.Location = new System.Drawing.Point(392, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(617, 90);
+            this.groupBox2.Size = new System.Drawing.Size(805, 90);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             // 
-            // txtNumeroVariables
+            // btnGenerarTabla
             // 
-            this.txtNumeroVariables.Location = new System.Drawing.Point(141, 40);
-            this.txtNumeroVariables.Name = "txtNumeroVariables";
-            this.txtNumeroVariables.Size = new System.Drawing.Size(42, 20);
-            this.txtNumeroVariables.TabIndex = 0;
+            this.btnGenerarTabla.Location = new System.Drawing.Point(204, 37);
+            this.btnGenerarTabla.Name = "btnGenerarTabla";
+            this.btnGenerarTabla.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerarTabla.TabIndex = 2;
+            this.btnGenerarTabla.Text = "Generar";
+            this.btnGenerarTabla.UseVisualStyleBackColor = true;
+            this.btnGenerarTabla.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -85,29 +103,78 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Numero de Variables";
             // 
-            // button1
+            // txtNumeroVariables
             // 
-            this.button1.Location = new System.Drawing.Point(204, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Generar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.txtNumeroVariables.Location = new System.Drawing.Point(141, 40);
+            this.txtNumeroVariables.Name = "txtNumeroVariables";
+            this.txtNumeroVariables.Size = new System.Drawing.Size(42, 20);
+            this.txtNumeroVariables.TabIndex = 0;
+            this.txtNumeroVariables.Text = "4";
+            // 
+            // btnGenerarMapa
+            // 
+            this.btnGenerarMapa.Location = new System.Drawing.Point(38, 608);
+            this.btnGenerarMapa.Name = "btnGenerarMapa";
+            this.btnGenerarMapa.Size = new System.Drawing.Size(99, 23);
+            this.btnGenerarMapa.TabIndex = 3;
+            this.btnGenerarMapa.Text = "Generar Mapa";
+            this.btnGenerarMapa.UseVisualStyleBackColor = true;
+            this.btnGenerarMapa.Click += new System.EventHandler(this.btnGenerarMapa_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pnlHorizontal);
+            this.groupBox3.Controls.Add(this.pnlVertical);
+            this.groupBox3.Controls.Add(this.dgvMapa);
+            this.groupBox3.Location = new System.Drawing.Point(392, 108);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(805, 508);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Mapa K";
+            // 
+            // pnlHorizontal
+            // 
+            this.pnlHorizontal.Location = new System.Drawing.Point(127, 28);
+            this.pnlHorizontal.Name = "pnlHorizontal";
+            this.pnlHorizontal.Size = new System.Drawing.Size(87, 40);
+            this.pnlHorizontal.TabIndex = 4;
+            // 
+            // pnlVertical
+            // 
+            this.pnlVertical.Location = new System.Drawing.Point(5, 133);
+            this.pnlVertical.Name = "pnlVertical";
+            this.pnlVertical.Size = new System.Drawing.Size(78, 45);
+            this.pnlVertical.TabIndex = 3;
+            // 
+            // dgvMapa
+            // 
+            this.dgvMapa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMapa.Location = new System.Drawing.Point(89, 74);
+            this.dgvMapa.Name = "dgvMapa";
+            this.dgvMapa.ReadOnly = true;
+            this.dgvMapa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvMapa.Size = new System.Drawing.Size(696, 382);
+            this.dgvMapa.TabIndex = 0;
             // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1119, 584);
+            this.ClientSize = new System.Drawing.Size(1224, 643);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.btnGenerarMapa);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Principal";
             this.Text = "Mapa de Karnaugh";
+            this.Load += new System.EventHandler(this.Principal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTabla)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMapa)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -119,7 +186,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtNumeroVariables;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGenerarTabla;
+        private System.Windows.Forms.Button btnGenerarMapa;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dgvMapa;
+        private System.Windows.Forms.FlowLayoutPanel pnlVertical;
+        private System.Windows.Forms.FlowLayoutPanel pnlHorizontal;
     }
 }
 
