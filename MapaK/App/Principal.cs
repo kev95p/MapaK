@@ -13,6 +13,7 @@ namespace App
     public partial class Principal : Form
     {
         private int Nvariables = 0;
+
         public Principal()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace App
 
         }
 
-        private void generarColumnas()
+        private void GenerarColumnas()
         {
             Nvariables = Convert.ToInt32(txtNumeroVariables.Text);
             int codigoletra = 65;
@@ -40,7 +41,7 @@ namespace App
 
         }
 
-        private void generarFilas()
+        private void GenerarFilas()
         {
             int numeroFilas = Convert.ToInt32(Math.Pow(2, Nvariables));
             dgvTabla.Rows.Add(numeroFilas);
@@ -78,19 +79,20 @@ namespace App
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             dgvTabla.RowCount = 0;
-            generarColumnas();
-            generarFilas();
+            GenerarColumnas();
+            GenerarFilas();
         }
 
-        private void dgvTabla_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvTabla_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 if (dgvTabla.Columns[e.ColumnIndex].Name == "X")
                 {
+                    dgvTabla.ReadOnly = false;
                     DataGridViewCell cell = dgvTabla.Rows[e.RowIndex].Cells[e.ColumnIndex];
                     dgvTabla.CurrentCell = cell;
                     dgvTabla.BeginEdit(true);
@@ -102,12 +104,14 @@ namespace App
             }
         }
 
-        private void dgvTabla_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DgvTabla_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             
             DataGridViewCell cell = dgvTabla.Rows[e.RowIndex].Cells[e.ColumnIndex];
             if(cell.Value == null)
             {
+
+                dgvTabla.ReadOnly = true;
                 return;
             }
             string valor = (string)cell.Value;
@@ -122,13 +126,13 @@ namespace App
                 }
                 
             }
+            dgvTabla.ReadOnly = true;
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            dgvTabla.RowCount = 0;
-            generarColumnas();
-            generarFilas();
+            btnGenerarTabla.PerformClick();
+            btnGenerarMapa.PerformClick();
         }
 
         private void GenerarLabels()
@@ -256,13 +260,104 @@ namespace App
                 contador++;
                 potencia++;
             }
+
+            contador = 0;
+            flag = false;
+            c = 0;
+            potencia = 0;
+            while (contador < numeroHorizontal)
+            {
+                c = 0;
+                flag = false;
+                for (int i = 0; i < Convert.ToInt32(Math.Pow(2, numeroHorizontal)); i++)
+                {
+                    String anterior = dgvMapa.Columns[i].Name;
+
+                    if (c == Convert.ToInt32(Math.Pow(2, potencia) * 2))
+                    {
+                        c = 0;
+                        flag = !flag;
+                    }
+                    if (c < Convert.ToInt32(Math.Pow(2, potencia)))
+                    {
+                        if (flag)
+                        {
+                            dgvMapa.Columns[i].Name = "1" + anterior;
+                        }
+                        else
+                        {
+                            dgvMapa.Columns[i].Name = "0" + anterior;
+                        }
+
+                    }
+                    else
+                    {
+                        if (flag)
+                        {
+                            dgvMapa.Columns[i].Name = "0" + anterior;
+                        }
+                        else
+                        {
+                            dgvMapa.Columns[i].Name = "1" + anterior;
+                        }
+
+                    }
+                    c++;
+
+                }
+                contador++;
+                potencia++;
+            }
         }
-        private void btnGenerarMapa_Click(object sender, EventArgs e)
+
+        private void BtnGenerarMapa_Click(object sender, EventArgs e)
         {
             LimpiarCabecerasFilas();
+            LimpiarCabecerasColumnas();
             GenerarLabels();
             GenerarCeldas();
             CodigoGray();
+            LlenarMapa();
+        }
+
+        private void LlenarMapa()
+        {
+            foreach(DataGridViewRow row in dgvTabla.Rows)
+            {
+                String valores = "";
+                for (int i = 0; i < row.Cells.Count-1; i++)
+                {
+                    valores = valores + row.Cells[i].Value.ToString();
+                }
+               // Console.WriteLine(valores);
+
+                for (int i = 0; i < dgvMapa.RowCount; i++)
+                {
+                    for (int j = 0; j < dgvMapa.ColumnCount; j++)
+                    {
+                        string valoresmapa = dgvMapa.Rows[i].HeaderCell.Value.ToString() + dgvMapa.Columns[j].Name;
+
+                        if(valores == valoresmapa)
+                        {
+                            if(row.Cells["X"].Value == null)
+                            {
+                                dgvMapa.Rows[i].Cells[j].Value = "#";
+                            }
+                            else if(row.Cells["X"].Value.ToString() == "1")
+                            {
+                                dgvMapa.Rows[i].Cells[j].Value = "1";
+                                dgvMapa.Rows[i].Cells[j].Style.BackColor = Color.LightBlue;
+                            }
+                            else if (row.Cells["X"].Value.ToString() == "0")
+                            {
+                                dgvMapa.Rows[i].Cells[j].Value = "0";
+                            }
+                        }
+
+                        
+                    }
+                }
+            }
         }
 
         private void LimpiarCabecerasFilas()
@@ -271,6 +366,49 @@ namespace App
             {
                 dgvMapa.Rows[i].HeaderCell.Value = String.Empty;
             }
+        }
+
+        private void LimpiarCabecerasColumnas()
+        {
+            for (int i = 0; i < dgvMapa.ColumnCount; i++)
+            {
+                dgvMapa.Columns[i].Name = String.Empty;
+            }
+        }
+
+        private void DgvTabla_SelectionChanged(object sender, EventArgs e)
+        {
+            
+            if(dgvTabla.CurrentRow.Cells[0].Value == null)
+            {
+                return;
+            }
+            String valores = "";
+            for (int i = 0; i < dgvTabla.CurrentRow.Cells.Count-1; i++)
+            {
+                valores = valores + dgvTabla.CurrentRow.Cells[i].Value.ToString();
+            }
+
+            for (int i = 0; i < dgvMapa.RowCount; i++)
+            {
+                for (int j = 0; j < dgvMapa.ColumnCount; j++)
+                {
+                    string valoresmapa = dgvMapa.Rows[i].HeaderCell.Value.ToString() + dgvMapa.Columns[j].Name;
+
+                    if (valores == valoresmapa)
+                    {
+                        dgvMapa.Rows[i].Cells[j].Selected = true;
+                    }
+                    else
+                    {
+                        dgvMapa.Rows[i].Cells[j].Selected = false;
+                    }
+
+
+                }
+            }
+
+
         }
     }
 }

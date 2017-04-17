@@ -54,14 +54,15 @@
             this.dgvTabla.AllowUserToResizeRows = false;
             this.dgvTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTabla.Location = new System.Drawing.Point(26, 37);
-            this.dgvTabla.MultiSelect = false;
             this.dgvTabla.Name = "dgvTabla";
+            this.dgvTabla.ReadOnly = true;
             this.dgvTabla.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvTabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTabla.Size = new System.Drawing.Size(325, 515);
             this.dgvTabla.TabIndex = 0;
-            this.dgvTabla.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTabla_CellClick);
-            this.dgvTabla.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTabla_CellEndEdit);
+            this.dgvTabla.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTabla_CellClick);
+            this.dgvTabla.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTabla_CellEndEdit);
+            this.dgvTabla.SelectionChanged += new System.EventHandler(this.DgvTabla_SelectionChanged);
             // 
             // groupBox1
             // 
@@ -92,7 +93,7 @@
             this.btnGenerarTabla.TabIndex = 2;
             this.btnGenerarTabla.Text = "Generar";
             this.btnGenerarTabla.UseVisualStyleBackColor = true;
-            this.btnGenerarTabla.Click += new System.EventHandler(this.button1_Click);
+            this.btnGenerarTabla.Click += new System.EventHandler(this.Button1_Click);
             // 
             // label1
             // 
@@ -119,7 +120,7 @@
             this.btnGenerarMapa.TabIndex = 3;
             this.btnGenerarMapa.Text = "Generar Mapa";
             this.btnGenerarMapa.UseVisualStyleBackColor = true;
-            this.btnGenerarMapa.Click += new System.EventHandler(this.btnGenerarMapa_Click);
+            this.btnGenerarMapa.Click += new System.EventHandler(this.BtnGenerarMapa_Click);
             // 
             // groupBox3
             // 
@@ -149,7 +150,13 @@
             // 
             // dgvMapa
             // 
-            this.dgvMapa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMapa.AllowUserToAddRows = false;
+            this.dgvMapa.AllowUserToDeleteRows = false;
+            this.dgvMapa.AllowUserToResizeColumns = false;
+            this.dgvMapa.AllowUserToResizeRows = false;
+            this.dgvMapa.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvMapa.ColumnHeadersHeight = 35;
+            this.dgvMapa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvMapa.Location = new System.Drawing.Point(89, 74);
             this.dgvMapa.Name = "dgvMapa";
             this.dgvMapa.ReadOnly = true;
